@@ -1,0 +1,10 @@
+#BlueJ class context
+comment0.target=Part2
+comment0.text=\r\n\ \uC5EC\uAE30\uC5D0\ Part2\ \uD074\uB798\uC2A4\ \uC124\uBA85\uC744\ \uC791\uC131\uD558\uC2ED\uC2DC\uC624.\r\n\ \r\n\ @author\ (\uC791\uC131\uC790\ \uC774\uB984)\ \r\n\ @version\ (\uBC84\uC804\uBC88\uD638\uB098\ \uB0A0\uC9DC)\r\n
+comment1.params=dna\ start\ stop
+comment1.target=java.lang.String\ findSimpleGene(java.lang.String,\ java.lang.String,\ java.lang.String)
+comment2.params=
+comment2.target=void\ testSimpleGene()
+comment3.params=args
+comment3.target=void\ main(java.lang.String[])
+numComments=4

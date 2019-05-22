@@ -1,0 +1,18 @@
+#BlueJ class context
+comment0.target=Part1
+comment0.text=\r\n\ \uC5EC\uAE30\uC5D0\ Part1\ \uD074\uB798\uC2A4\ \uC124\uBA85\uC744\ \uC791\uC131\uD558\uC2ED\uC2DC\uC624.\r\n\ \r\n\ @author\ (\uC791\uC131\uC790\ \uC774\uB984)\ \r\n\ @version\ (\uBC84\uC804\uBC88\uD638\uB098\ \uB0A0\uC9DC)\r\n
+comment1.params=dna
+comment1.target=void\ printAllGenes(java.lang.String)
+comment2.params=
+comment2.target=void\ testprintAllGenes()
+comment3.params=dna
+comment3.target=java.lang.String\ findGene(java.lang.String)
+comment4.params=
+comment4.target=void\ testFindGene()
+comment5.params=dna\ startIndex\ stopCodon
+comment5.target=int\ findStopCodon(java.lang.String,\ int,\ java.lang.String)
+comment6.params=
+comment6.target=void\ testFindStopCodon()
+comment7.params=args
+comment7.target=void\ main(java.lang.String[])
+numComments=8
