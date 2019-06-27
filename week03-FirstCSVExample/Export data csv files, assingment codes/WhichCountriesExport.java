@@ -54,20 +54,33 @@ public class WhichCountriesExport {
 		
 		
 		// call countryInfo method
-		String result = countryInfo(parser, "Germany");
+		String result = countryInfo(parser, "Nauru");
 		System.out.println(result);
+		System.out.println("contry Info Done");
+		System.out.println("");
 		
 		
 		// call listExportersTwoProducts method
 		parser = fr.getCSVParser();
 		listExportersTwoProducts(parser, "gold", "diamonds");
+		System.out.println("two products Done");
+		System.out.println("");
 		
 		
 		//call numberOfExporters method
 		parser = fr.getCSVParser();
 		int count = numberOfExporters(parser, "gold");
 		System.out.println(count);
-			
+		System.out.println("Number of exporters Done");
+		System.out.println("");
+		
+		
+		// call bigExporters method
+		parser = fr.getCSVParser();
+		bigExporters(parser, "$999,999,999,999");
+		System.out.println("Big exporters Done");
+		System.out.println("");
+		
 	}  
 	
 	
@@ -167,5 +180,42 @@ public class WhichCountriesExport {
 		
 		return numOfExportItem;
 		
+	}
+	
+	
+	
+	
+	
+	/*
+	Assignment week 3: 1-5
+	
+	5. Write a void method named bigExporters that has two parameters, parser is a CSVParser, and amount is a String in the format of a dollar sign, followed by an integer number with a comma separator every three digits from the right. An example of such a string might be “$400,000,000”. This method prints the names of countries and their Value amount for all countries whose Value (dollars) string is longer than the amount string. You do not need to parse either string value as an integer, just compare the lengths of the strings. For example, if bigExporters is called with the file exports_small.csv and amount with the string $999,999,999, then this method would print eight countries and their export values shown here:
+	
+		Germany $1,547,000,000,000
+		Macedonia $3,421,000,000
+		Malawi $1,332,000,000
+		Malaysia $231,300,000,000
+		Namibia $4,597,000,000
+		Peru $36,430,000,000
+		South Africa $97,900,000,000
+		United States $1,610,000,000,000
+		
+	*/
+	
+	public void bigExporters (CSVParser parser, String amount) {
+		
+		int amountLength = amount.length();
+		
+		for (CSVRecord record : parser) {
+			
+			int dollarLength = record.get("Value (dollars)").length();
+			
+			if (dollarLength > amountLength) {
+				
+				String countryName = record.get("Country");
+				String exportValue = record.get("Value (dollars)");
+				System.out.println(countryName + " " + exportValue);				
+			}		
+		}		
 	}
 }
