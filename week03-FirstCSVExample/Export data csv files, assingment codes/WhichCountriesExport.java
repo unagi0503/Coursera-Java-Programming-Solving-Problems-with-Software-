@@ -62,6 +62,12 @@ public class WhichCountriesExport {
 		parser = fr.getCSVParser();
 		listExportersTwoProducts(parser, "gold", "diamonds");
 		
+		
+		//call numberOfExporters method
+		parser = fr.getCSVParser();
+		int count = numberOfExporters(parser, "gold");
+		System.out.println(count);
+			
 	}  
 	
 	
@@ -108,7 +114,6 @@ public class WhichCountriesExport {
 	
 	
 	/* 
-	
 	Assignment week 3: 1-3
 		
 	3. Write a void method named listExportersTwoProducts that has three parameters, parser is a CSVParser, exportItem1 is a String and exportItem2 is a String. This method prints the names of all the countries that have both exportItem1 and exportItem2 as export items. For example, using the file exports_small.csv, this method called with the items “gold” and “diamonds” would print the countries 
@@ -131,5 +136,36 @@ public class WhichCountriesExport {
 				
 			}				
 		}		
+	}
+	
+	
+	
+	
+	
+	/* 
+	Assignment week 3: 1-4
+	
+	4. Write a method named numberOfExporters, which has two parameters, parser is a CSVParser, and exportItem is a String. This method returns the number of countries that export exportItem. For example, using the file exports_small.csv, this method called with the item “gold” would return 3. 
+		
+	*/
+	
+	public int numberOfExporters (CSVParser parser, String exportItem) {
+		
+		int numOfExportItem = 0;
+		
+		for (CSVRecord record : parser) {
+			
+			String export = record.get("Exports");
+			
+			if (export.contains(exportItem)) {
+				
+				numOfExportItem += 1;
+				
+			}
+			
+		}
+		
+		return numOfExportItem;
+		
 	}
 }
