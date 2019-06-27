@@ -4,4 +4,10 @@ comment1.params=parser\ exportOfInterest
 comment1.target=void\ listExporters(org.apache.commons.csv.CSVParser,\ java.lang.String)
 comment2.params=
 comment2.target=void\ whoExportsCoffee()
-numComments=3
+comment3.params=
+comment3.target=void\ tester()
+comment3.text=\ \r\n\tAssignment\ week\ 3\:\ 1-1\r\n\t\r\n\tWrite\ a\ method\ named\ tester\ that\ will\ create\ your\ CSVParser\ and\ call\ each\ of\ the\ methods\ below\ in\ parts\ 2,\ 3,\ 4,\ and\ 5.\ You\ would\ start\ your\ code\ with\:\r\n\t\r\n\tFileResource\ fr\ \=\ new\ FileResource();\r\n\tCSVParser\ parser\ \=\ fr.getCSVParser();\r\n\t\r\n\tEach\ time\ you\ want\ to\ use\ the\ parser\ with\ another\ method,\ you\ will\ need\ to\ reset\ the\ parser\ by\ calling\ fr.getCSVParser()\ again\ to\ get\ a\ new\ parser.\r\n\t\r\n\tparser\ \=\ fr.getCSVParser();\r\n
+comment4.params=parser\ country
+comment4.target=java.lang.String\ countryInfo(org.apache.commons.csv.CSVParser,\ java.lang.String)
+comment4.text=\r\n\tAssignment\ week\ 3\:\ 1-2\r\n\t\r\n\tWrite\ a\ method\ named\ countryInfo\ that\ has\ two\ parameters,\ parser\ is\ a\ CSVParser\ and\ country\ is\ a\ String.\ This\ method\ returns\ a\ string\ of\ information\ about\ the\ country\ or\ returns\ \u201CNOT\ FOUND\u201D\ if\ there\ is\ no\ information\ about\ the\ country.\ The\ format\ of\ the\ string\ returned\ is\ the\ country,\ followed\ by\ \u201C\:\ \u201C,\ followed\ by\ a\ list\ of\ the\ countries\u2019\ exports,\ followed\ by\ \u201C\:\ \u201C,\ followed\ by\ the\ countries\ export\ value.\ For\ example,\ using\ the\ file\ exports_small.csv\ and\ the\ country\ Germany,\ the\ program\ returns\ the\ string\:\r\n\t\r\n\t\tGermany\:\ motor\ vehicles,\ machinery,\ chemicals\:\ $1,547,000,000,000\r\n\t\r\n
+numComments=5
