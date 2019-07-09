@@ -12,6 +12,65 @@ import java.io.*;
 
 public class weatherData {
 	
+	
+	/* 02 fileWithColdestTemperature
+	
+	Write the method fileWithColdestTemperature that has no parameters. This method should return a string that is the name of the file from selected files that has the coldest temperature. You should also write a void method named testFileWithColdestTemperature() to test this method. Note that after determining the filename, you could call the method coldestHourInFile to determine the coldest temperature on that day. 
+	
+	*/
+	
+	public String fileWithColdestTemperature () {
+	
+		String coldestDayFileName = "";
+		CSVRecord coldestSoFar = null;
+		DirectoryResource dr = new DirectoryResource();
+		
+		for (File f : dr.selectedFiles()) {
+			FileResource fr = new FileResource(f);
+			CSVRecord currentRecord = coldestHourInFile(fr.getCSVParser());
+			coldestSoFar = getSmallestOfTwo(currentRecord, coldestSoFar);
+			//System.out.println(coldestSoFar);
+			coldestDayFileName = coldestSoFar.get("DateUTC").substring(0,10);
+			coldestDayFileName = "weather-" + coldestDayFileName + ".csv";
+		}
+		
+		//coldestDayFileName = coldestSoFar.get("DateUTC").substring(0,10);
+		//coldestDayFileName = "weather-" + coldestDayFileName + ".csv";
+		System.out.println("FileName: " + coldestDayFileName + " !!!");
+		return coldestDayFileName;
+	
+	}
+	
+	
+	public void testFileWithColdestTemperature() {
+		
+		// data/2015/weather-2015-01-01.csv
+		
+		String coldestDayFileName = fileWithColdestTemperature();
+		System.out.println(coldestDayFileName);
+		
+		String coldestDayFileNameYear = coldestDayFileName.substring(8,12);
+		String coldestDayFileNamePath = "data/" + coldestDayFileNameYear + "/" + coldestDayFileName; 
+		
+		System.out.println(coldestDayFileNamePath);
+		
+		FileResource fr = new FileResource(coldestDayFileNamePath);
+		CSVRecord coldest = coldestHourInFile(fr.getCSVParser());
+		
+		System.out.println("Coldest day was in file " + coldestDayFileName);
+		System.out.println("Coldest temperature on that day was " + coldest.get("TemperatureF"));
+		System.out.println("All the Temperatures on the coldest day were:");
+		
+		for (CSVRecord currentRecord : fr.getCSVParser()) {
+			String dateAndTime = currentRecord.get("DateUTC");
+			String temperature = currentRecord.get("TemperatureF");
+			System.out.println(dateAndTime + ": " + temperature);
+		}
+		
+	}
+	
+	
+	
 	/* 01 Coldest Hour in a day
 	
 	Write a method named coldestHourInFile that has one parameter, a CSVParser named parser. This method returns the CSVRecord with the coldest temperature in the file and thus all the information about the coldest temperature, such as the hour of the coldest temperature. You should also write a void method named testColdestHourInFile() to test this method and print out information about that coldest temperature, such as the time of its occurrence.
@@ -57,7 +116,7 @@ public class weatherData {
 	
 	}
 	
-	
+			
 	/////////////////////////////////////////////////////////////////////////////////////////////////////
 		
 	public CSVRecord hottestHourInFile(CSVParser parser) {
