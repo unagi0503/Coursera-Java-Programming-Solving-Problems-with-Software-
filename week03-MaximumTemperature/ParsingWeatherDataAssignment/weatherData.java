@@ -20,22 +20,46 @@ public class weatherData {
 	
 	*/
 	
-	public CSVRecord coldestHourInFile (CSVParser parser) {
+	public CSVRecord getSmallestOfTwo(CSVRecord currentRecord, CSVRecord smallestSoFar) {
+		
+		if (smallestSoFar == null) {
+			smallestSoFar = currentRecord;
+		} 
+		
+		else {
+			double currentTemp = Double.parseDouble(currentRecord.get("TemperatureF"));
+			double smallestTemp = Double.parseDouble(smallestSoFar.get("TemperatureF"));
+			
+			if (currentTemp != -9999 && currentTemp < smallestTemp) {
+				smallestSoFar = currentRecord;
+			}
+		}
+		return smallestSoFar;
+	}
 	
 		
+	public CSVRecord coldestHourInFile (CSVParser parser) {
 	
+		CSVRecord coldestSoFar = null;
+		for (CSVRecord currentRecord : parser) {
+			coldestSoFar = getSmallestOfTwo(currentRecord, coldestSoFar);
+		}
+		return coldestSoFar;
 	}
+	
 	
 	public void testColdestHourInFile () {
 	
 		FileResource fr = new FileResource("data/2015/weather-2015-01-01.csv");
 		CSVRecord coldest = coldestHourInFile(fr.getCSVParser());
 		System.out.println("coldest temperature was " + coldest.get("TemperatureF") +
-				   " at " + largest.get("TimeEST"));
+				   " at " + coldest.get("TimeEST"));
 	
 	}
 	
 	
+	/////////////////////////////////////////////////////////////////////////////////////////////////////
+		
 	public CSVRecord hottestHourInFile(CSVParser parser) {
 		//start with largestSoFar as nothing
 		CSVRecord largestSoFar = null;
