@@ -25,6 +25,7 @@ public class CSVMax {
 				if (currentTemp > largestTemp) {
 					//If so update largestSoFar to currentRow
 					largestSoFar = currentRow;
+				}
 			}
 		}
 		//The largestSoFar is the answer
