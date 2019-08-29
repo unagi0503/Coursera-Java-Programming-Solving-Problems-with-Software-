@@ -13,6 +13,38 @@ import java.io.*;
 public class weatherData {
 	
 	
+	/*** 05 . Write the method [averageTemperatureInFile] that has one parameter, a CSVParser named parser. This method returns a double that represents the average temperature in the file. You should also write a void method named [testAverageTemperatureInFile()] to test this method. When this method runs and selects the file for January 20, 2014, the method should print out
+	
+	1  Average temperature in file is 44.93333333333334
+	***/
+	
+	public double averageTemperatureInFile(CSVParser parser) {
+		
+		double totalTemp = 0.0;
+		int count = 0;
+		
+		for (CSVRecord currentRecord : parser){
+			totalTemp += Double.parseDouble(currentRecord.get("TemperatureF"));
+			count += 1;
+		}
+		
+		return totalTemp/count;
+	}
+	
+	
+	public void testAverageTemperatureInFile() {
+		
+		FileResource fr = new FileResource("data/2014/weather-2014-01-20.csv");
+	    CSVParser parser = fr.getCSVParser();
+	    double averageTemp = averageTemperatureInFile(parser);
+		System.out.println("Average temperature in file is " + averageTemp);
+	}
+	
+	
+	
+	
+	
+	
 	/*** 04 Write the method [lowestHumidityInManyFiles] that has no parameters. This method returns a CSVRecord that has the lowest humidity over all the files. If there is a tie, then return the first such record that was found. You should also write a void method named [testLowestHumidityInManyFiles()] to test this method and to print the lowest humidity AND the time the lowest humidity occurred. Be sure to test this method on two files so you can check if it is working correctly. If you run this program and select the files for January 19, 2014 and January 20, 2014, you should get
 	
 	1  Lowest Humidity was 24 at 2014-01-20 19:51:00
