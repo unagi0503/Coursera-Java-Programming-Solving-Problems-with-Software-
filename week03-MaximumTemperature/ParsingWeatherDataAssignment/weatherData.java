@@ -13,10 +13,61 @@ import java.io.*;
 public class weatherData {
 	
 	
-	/*** 05 . Write the method [averageTemperatureInFile] that has one parameter, a CSVParser named parser. This method returns a double that represents the average temperature in the file. You should also write a void method named [testAverageTemperatureInFile()] to test this method. When this method runs and selects the file for January 20, 2014, the method should print out
+	/***  06 Write the method [averageTemperatureWithHighHumidityInFile] that has two parameters, a CSVParser named parser and an integer named value. This method returns a double that represents the average temperature of only those temperatures when the humidity was greater than or equal to value. You should also write a void method named [testAverageTemperatureWithHighHumidityInFile()] to test this method. When this method runs checking for humidity greater than or equal to 80 and selects the file for January 20, 2014, the method should print out
+	
+	1  No temperatures with that humidity
+	
+	If you run the method checking for humidity greater than or equal to 80 and select the file March 20, 2014, a wetter day, the method should print out
+	
+	1  Average Temp when high Humidity is 41.78666666666667
+	
+	
+	***/
+	
+	public double averageTemperatureWithHighHumidityInFile (CSVParser parser, int value) {
+		
+		double totalTemp = 0.0;
+		int count = 0;
+		
+		for (CSVRecord currentRecord : parser){
+			if ((Integer.parseInt(currentRecord.get("Humidity"))) >= value) {
+				totalTemp += Double.parseDouble(currentRecord.get("TemperatureF"));
+				count += 1;
+			}
+		}
+		
+		if (totalTemp == 0.0) {
+			return 0.0;
+		} else {
+			return totalTemp/count;	
+		}
+	}
+	
+	public void testAverageTemperatureWithHighHumidityInFile(){
+		
+		FileResource fr = new FileResource("data/2014/weather-2014-03-20.csv");
+		CSVParser parser = fr.getCSVParser();
+		double averageTemp = averageTemperatureWithHighHumidityInFile(parser, 80);
+		
+				
+		if (averageTemp == 0.0) {
+			System.out.println("No temperatures with that humidity");
+		} else {
+			System.out.println("Average Temp when high Humidity is " + averageTemp);
+		}
+		
+	}
+	
+	
+	
+	
+	
+	
+	/*** 05 Write the method [averageTemperatureInFile] that has one parameter, a CSVParser named parser. This method returns a double that represents the average temperature in the file. You should also write a void method named [testAverageTemperatureInFile()] to test this method. When this method runs and selects the file for January 20, 2014, the method should print out
 	
 	1  Average temperature in file is 44.93333333333334
 	***/
+	
 	
 	public double averageTemperatureInFile(CSVParser parser) {
 		
