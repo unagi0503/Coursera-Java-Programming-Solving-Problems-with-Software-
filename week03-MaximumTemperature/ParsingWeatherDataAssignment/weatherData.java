@@ -13,12 +13,91 @@ import java.io.*;
 public class weatherData {
 	
 	
+	/*** 3. Write a method named lowestHumidityInFile that has one parameter, a CSVParser named parser. This method returns the CSVRecord that has the lowest humidity. If there is a tie, then return the first such record that was found.
+
+	Note that sometimes there is not a number in the Humidity column but instead there is the string “N/A”. This only happens very rarely. You should check to make sure the value you get is not “N/A” before converting it to a number.
+
+	Also note that the header for the time is either TimeEST or TimeEDT, depending on the time of year. You will instead use the DateUTC field at the right end of the data file to get both the date and time of a temperature reading.
+
+	You should also write a void method named testLowestHumidityInFile() to test this method that starts with these lines:
+	
+	1  FileResource fr = new FileResource();
+	2  CSVParser parser = fr.getCSVParser();
+	3  CSVRecord csv = lowestHumidityInFile(parser);
+	
+	
+	and then prints the lowest humidity AND the time the lowest humidity occurred. For example, for the file weather-2014-01-20.csv, the output should be:
+	
+	1  Lowest Humidity was 24 at 2014-01-20 19:51:00
+	
+	***/
+	
+	/* String Comparison 
+			
+			In Java, string equals() method compares the two given strings based on the data/content of the string. If all the contents of both the strings are same then it returns true. If all characters do not match, then it returns false. 
+			
+			Syntax:
+
+			str1.equals(str2);
+			
+			URL: https://beginnersbook.com/2013/12/java-string-compareto-method-example/
+	*/				
+	
+	
+	public CSVRecord getLowestHumidityOfTwo(CSVRecord currentRecord, CSVRecord lowestHumiditySoFar) {
+		
+		if (currentRecord.get("Humidity").equals("N/A")) {
+			return lowestHumiditySoFar;
+			
+		} else {
+			
+			if (lowestHumiditySoFar == null) {
+				lowestHumiditySoFar = currentRecord;
+			
+			} else {
+				int currentHumidity = Integer.parseInt(currentRecord.get("Humidity"));
+				int lowestHumidity = Integer.parseInt(lowestHumiditySoFar.get("Humidity"));
+				
+				if (currentHumidity < lowestHumidity) {
+					lowestHumiditySoFar = currentRecord;
+				}
+			}
+		}
+		
+		return lowestHumiditySoFar;
+	}
+	
+	
+	public CSVRecord lowestHumidityInFile (CSVParser parser) {
+		
+		CSVRecord lowestHumiditySoFar = null;
+		for (CSVRecord currentRecord : parser) {
+			lowestHumiditySoFar = getLowestHumidityOfTwo(currentRecord, lowestHumiditySoFar);
+		}
+		return lowestHumiditySoFar;
+	}
+	
+	
+	public void testLowestHumidityInFile () {
+		
+		FileResource fr = new FileResource("data/2014/weather-2014-01-20.csv");
+	    CSVParser parser = fr.getCSVParser();
+	    CSVRecord csv = lowestHumidityInFile(parser);
+		
+		System.out.println("Lowest Humidity was " + csv.get("Humidity") +
+				   " at " + csv.get("DateUTC"));
+	}
+	
+
+	
+	
+	
+	
 	/*** 02 fileWithColdestTemperature
 	
 	Write the method fileWithColdestTemperature that has no parameters. This method should return a string that is the name of the file from selected files that has the coldest temperature. You should also write a void method named testFileWithColdestTemperature() to test this method. Note that after determining the filename, you could call the method coldestHourInFile to determine the coldest temperature on that day. 
 	
 	***/
-	
 	
 	
 	public String getFileName (File file) {
@@ -31,7 +110,6 @@ public class weatherData {
 		filename = filename.substring(filename.length() - 22, filename.length());
 	    return filename;
     }
-	
 	
 	
 	public String fileWithColdestTemperature () {
@@ -53,7 +131,6 @@ public class weatherData {
 		
 		return coldestDayFileName;
 	}
-	
 	
 	
 	public void testFileWithColdestTemperature() {
@@ -80,6 +157,7 @@ public class weatherData {
 	
 	
 	
+	
 	/*** 01 Coldest Hour in a day
 	
 	Write a method named coldestHourInFile that has one parameter, a CSVParser named parser. This method returns the CSVRecord with the coldest temperature in the file and thus all the information about the coldest temperature, such as the hour of the coldest temperature. You should also write a void method named testColdestHourInFile() to test this method and print out information about that coldest temperature, such as the time of its occurrence.
@@ -87,6 +165,7 @@ public class weatherData {
 	NOTE: Sometimes there was not a valid reading at a specific hour, so the temperature field says -9999. You should ignore these bogus temperature values when calculating the lowest temperature.
 	
 	***/
+	
 	
 	public CSVRecord getSmallestOfTwo(CSVRecord currentRecord, CSVRecord smallestSoFar) {
 		
@@ -105,7 +184,7 @@ public class weatherData {
 		return smallestSoFar;
 	}
 	
-		
+	
 	public CSVRecord coldestHourInFile (CSVParser parser) {
 	
 		CSVRecord coldestSoFar = null;
@@ -124,4 +203,5 @@ public class weatherData {
 				   " at " + coldest.get("TimeEST"));
 	
 	}
-}	
+}
+	
