@@ -13,13 +13,46 @@ import java.io.*;
 public class weatherData {
 	
 	
-	/*** 3. Write a method named lowestHumidityInFile that has one parameter, a CSVParser named parser. This method returns the CSVRecord that has the lowest humidity. If there is a tie, then return the first such record that was found.
+	/*** 04 Write the method [lowestHumidityInManyFiles] that has no parameters. This method returns a CSVRecord that has the lowest humidity over all the files. If there is a tie, then return the first such record that was found. You should also write a void method named [testLowestHumidityInManyFiles()] to test this method and to print the lowest humidity AND the time the lowest humidity occurred. Be sure to test this method on two files so you can check if it is working correctly. If you run this program and select the files for January 19, 2014 and January 20, 2014, you should get
+	
+	1  Lowest Humidity was 24 at 2014-01-20 19:51:00
+	
+	***/
+	
+	
+	public CSVRecord lowestHumidityInManyFiles() {
+		
+		CSVRecord lowestHumiditySoFar = null;
+		DirectoryResource dr = new DirectoryResource();
+		
+		for (File f : dr.selectedFiles()) {
+			FileResource fr = new FileResource(f);
+			CSVRecord currentRecord = lowestHumidityInFile(fr.getCSVParser());
+			lowestHumiditySoFar = getLowestHumidityOfTwo(currentRecord, lowestHumiditySoFar);
+		}
+		
+		return lowestHumiditySoFar; 
+	}
+	
+	
+	public void testLowestHumidityInManyFiles() {
+		CSVRecord csv = lowestHumidityInManyFiles();
+		System.out.println("Lowest Humidity was " + csv.get("Humidity") +
+				   " at " + csv.get("DateUTC"));
+	}
+	
+	
+	
+	
+	
+	
+	/*** 03 Write a method named [lowestHumidityInFile] that has one parameter, a CSVParser named parser. This method returns the CSVRecord that has the lowest humidity. If there is a tie, then return the first such record that was found.
 
 	Note that sometimes there is not a number in the Humidity column but instead there is the string “N/A”. This only happens very rarely. You should check to make sure the value you get is not “N/A” before converting it to a number.
 
 	Also note that the header for the time is either TimeEST or TimeEDT, depending on the time of year. You will instead use the DateUTC field at the right end of the data file to get both the date and time of a temperature reading.
 
-	You should also write a void method named testLowestHumidityInFile() to test this method that starts with these lines:
+	You should also write a void method named [testLowestHumidityInFile()] to test this method that starts with these lines:
 	
 	1  FileResource fr = new FileResource();
 	2  CSVParser parser = fr.getCSVParser();
