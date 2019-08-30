@@ -62,14 +62,14 @@ public class WhichCountriesExport {
 		
 		// call listExportersTwoProducts method
 		parser = fr.getCSVParser();
-		listExportersTwoProducts(parser, "gold", "diamonds");
+		listExportersTwoProducts(parser, "cotton", "flowers");
 		System.out.println("two products Done");
 		System.out.println("");
 		
 		
 		//call numberOfExporters method
 		parser = fr.getCSVParser();
-		int count = numberOfExporters(parser, "gold");
+		int count = numberOfExporters(parser, "cocoa");
 		System.out.println(count);
 		System.out.println("Number of exporters Done");
 		System.out.println("");
