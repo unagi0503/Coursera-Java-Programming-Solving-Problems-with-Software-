@@ -45,7 +45,7 @@ public class weatherData {
 	
 	public void testAverageTemperatureWithHighHumidityInFile(){
 		
-		FileResource fr = new FileResource("data/2014/weather-2014-03-20.csv");
+		FileResource fr = new FileResource("nc_weather/2014/weather-2014-03-30.csv");
 		CSVParser parser = fr.getCSVParser();
 		double averageTemp = averageTemperatureWithHighHumidityInFile(parser, 80);
 		
@@ -85,7 +85,7 @@ public class weatherData {
 	
 	public void testAverageTemperatureInFile() {
 		
-		FileResource fr = new FileResource("data/2014/weather-2014-01-20.csv");
+		FileResource fr = new FileResource("nc_weather/2014/weather-2014-06-01.csv");
 	    CSVParser parser = fr.getCSVParser();
 	    double averageTemp = averageTemperatureInFile(parser);
 		System.out.println("Average temperature in file is " + averageTemp);
@@ -196,7 +196,7 @@ public class weatherData {
 	
 	public void testLowestHumidityInFile () {
 		
-		FileResource fr = new FileResource("data/2014/weather-2014-01-20.csv");
+		FileResource fr = new FileResource("nc_weather/2014/weather-2014-04-01.csv");
 	    CSVParser parser = fr.getCSVParser();
 	    CSVRecord csv = lowestHumidityInFile(parser);
 		
@@ -238,13 +238,19 @@ public class weatherData {
 			FileResource fr = new FileResource(f);
 					
 			CSVRecord currentRecord = coldestHourInFile(fr.getCSVParser());
+			double currentTemp = Double.parseDouble(currentRecord.get("TemperatureF"));
 			
-			if (currentRecord == getSmallestOfTwo(currentRecord, coldestSoFar)) {
-				coldestDayFileName = getFileName(f); 
-			}
+			
+			if (currentTemp != -9999){
 				
+				if (currentRecord == getSmallestOfTwo(currentRecord, coldestSoFar)) {
+					coldestSoFar = currentRecord;
+					coldestDayFileName = getFileName(f); 
+					//coldestDayFileName = f.getName();
+				}			
+			} 
+					
 		}
-		
 		return coldestDayFileName;
 	}
 	
@@ -313,10 +319,10 @@ public class weatherData {
 	
 	public void testColdestHourInFile () {
 	
-		FileResource fr = new FileResource("data/2014/weather-2014-01-04.csv");
+		FileResource fr = new FileResource("nc_weather/2014/weather-2014-05-01.csv");
 		CSVRecord coldest = coldestHourInFile(fr.getCSVParser());
 		System.out.println("coldest temperature was " + coldest.get("TemperatureF") +
-				   " at " + coldest.get("TimeEST"));
+				   " at " + coldest.get("DateUTC"));
 	
 	}
 }
