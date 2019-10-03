@@ -19,6 +19,8 @@ public class BabyBirths {
 		}
 	}
 
+
+
 	public void totalBirths (FileResource fr) {
 		int totalBirths = 0;
 		int totalBoys = 0;
@@ -45,28 +47,47 @@ public class BabyBirths {
 		System.out.println("male boys names = " + totalBoysNames);
 	}
 
+
+
 	public void testTotalBirths () {
 		//FileResource fr = new FileResource();
 		FileResource fr = new FileResource();
 		totalBirths(fr);
 	}
 	
+	
+	
 	public int getRank (int year, String name, String gender) {
 		
-		int Rank = 0;
-		String dataName = "yob" + year;
-		FileResource fr = new FileResource("us_babynames/us_babynames_by_year/" + dataName);
+		int rank = -1;
+		int counter = 0;
+		
+		String dataName = "yob" + year + "short.csv";
+		FileResource fr = new FileResource();
 		
 		for (CSVRecord rec : fr.getCSVParser(false)) {
 			if (rec.get(1).equals(gender)) {
 				if (rec.get(0).equals(name)) {
-					
+					rank = counter + 1;
+					return rank;
+				} else {
+					counter += 1;
 				}
 			}
 		}
 		
-		return 0;
+		return rank;
 	}
+	
+	
+	
+	public void testGetRank () {
+		int rank = getRank(2012, "Mason", "M");
+		System.out.println(rank);
+	}
+	
+	
+	
 }
 
 
