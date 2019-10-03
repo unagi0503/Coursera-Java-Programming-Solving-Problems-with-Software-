@@ -85,6 +85,7 @@ public class BabyBirths {
 	
 	
 	public void testGetRank () {
+		
 		int year = 2012;
 		String name = "Mason";
 		String gender = "M";
@@ -119,6 +120,7 @@ public class BabyBirths {
 	
 	
 	public void testGetName () {
+		
 		int year = 2012;
 		int rank = 4;
 		String gender = "M";
@@ -192,9 +194,12 @@ public class BabyBirths {
 	
 	
 	public void testYearOfHightRank() {
+		
 		String name = "Noah";
 		String gender = "M";
+		
 		int highestYear = yearOfHighestRank(name, gender); 
+		
 		System.out.println("The Year of the Highest Rank for " + name + " is " + highestYear);
 	}
 	
@@ -235,17 +240,64 @@ public class BabyBirths {
 	
 	
 	public void testGetAverageRank () {
+		
 		String name = "Jacob";
 		String gender = "M";
+		
 		double averageRank = getAverageRank(name, gender);  // name Jacob and gender ‘M’ and selecting the three test files above results in returning 2.66.
 		
 		System.out.println("The Average Rank of " + name + " is " + String.format("%.2f", averageRank));
 	}
 	
 	
+	
 	public int getTotalBirthsRankedHigher (int year, String name, String gender) {
 		
-		return 1;
+		//String fileName = "us_babynames/us_babynames_by_year/" + "yob" + year + ".csv";
+		String fileName = "us_babynames/us_babynames_test/" + "yob" + year + "short.csv";
+		
+		int rank = getRank(year, name, gender);
+		
+		int totalBirths = 0;
+		int count = 0;
+		int currentRank;
+		
+		
+		FileResource fr = new FileResource(fileName);
+		
+		if (rank == -1) {
+			for (CSVRecord rec : fr.getCSVParser(false)) {
+				if (rec.get(1).equals(gender)) {
+					totalBirths += Integer.parseInt(rec.get(2));
+				}
+			}
+				
+		}
+		
+		for (CSVRecord rec : fr.getCSVParser(false)) {
+			if (rec.get(1).equals(gender)) {
+				currentRank = getRank(year, rec.get(0), rec.get(1));
+				if (currentRank < rank) {
+					totalBirths += Integer.parseInt(rec.get(2));
+				}
+			}
+		}
+		
+		return totalBirths;
+	}
+	
+	
+	
+	public void testGetTotalBirthsRankedHigher () {
+		
+		int year = 2012;
+		String name = "Ethan";
+		String gender = "M";
+		
+		int totalBirthsRankedHigher = getTotalBirthsRankedHigher(year, name, gender); // should return 15
+		
+		System.out.println(totalBirthsRankedHigher);
+		
 	}
 	
 }
