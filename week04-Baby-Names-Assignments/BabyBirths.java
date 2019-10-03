@@ -63,8 +63,8 @@ public class BabyBirths {
 		
 		int rank = -1;
 		int counter = 0;
-		//String fileName = "us_babynames/us_babynames_by_year/" + "yob" + year + ".csv";
-		String fileName = "us_babynames/us_babynames_test/" + "yob" + year + "short.csv";
+		String fileName = "us_babynames/us_babynames_by_year/" + "yob" + year + ".csv";
+		//String fileName = "us_babynames/us_babynames_test/" + "yob" + year + "short.csv";
 		
 		FileResource fr = new FileResource(fileName);
 		
@@ -86,13 +86,13 @@ public class BabyBirths {
 	
 	public void testGetRank () {
 		
-		int year = 2012;
-		String name = "Mason";
+		int year = 1971;
+		String name = "Frank";
 		String gender = "M";
 		
 		int rank = getRank(year, name, gender);
 		
-		System.out.println("The Rank of " + name + ": " + rank);
+		System.out.println("The Rank of " + name + " in " + year + " : " + rank);
 	}
 	
 	
@@ -100,8 +100,8 @@ public class BabyBirths {
 	public String getName (int year, int rank, String gender) {
 		
 		int counter = 0;
-		//String fileName = "us_babynames/us_babynames_by_year/" + "yob" + year + ".csv";
-		String fileName = "us_babynames/us_babynames_test/" + "yob" + year + "short.csv";
+		String fileName = "us_babynames/us_babynames_by_year/" + "yob" + year + ".csv";
+		//String fileName = "us_babynames/us_babynames_test/" + "yob" + year + "short.csv";
 		
 		FileResource fr = new FileResource(fileName);
 		
@@ -121,13 +121,13 @@ public class BabyBirths {
 	
 	public void testGetName () {
 		
-		int year = 2012;
-		int rank = 4;
-		String gender = "M";
+		int year = 1980;
+		int rank = 350;
+		String gender = "F";
 		
 		String name = getName(year, rank, gender);
 		
-		System.out.println("The Name of the " + rank + "th rank: " + name);
+		System.out.println("The Name of the " + rank + "th rank in " + year + " : " + name);
 	}
 	
 	
@@ -138,6 +138,7 @@ public class BabyBirths {
 		int rank = getRank(year, name, gender);
 		String nameInNewYear = getName(newYear, rank, gender);
 		String pronoun;
+		
 		if (gender == "F") {
 			pronoun = "she";
 		} else {
@@ -149,7 +150,13 @@ public class BabyBirths {
 	}
 	
 	public void testWhatIsNameInYear () {
-		whatIsNameInYear("Isabella", 2012, 2014, "F");
+		
+		String name = "Owen";
+		int year = 1974;
+		int newYear = 2014;
+		String gender = "M";
+		
+		whatIsNameInYear(name, year, newYear, gender);
 	}
 	
 	
@@ -180,7 +187,7 @@ public class BabyBirths {
 					rankSoFar = currentRank;
 					yearSoFar = currentYear;
 				} else {
-					if (currentRank <= rankSoFar) {
+					if (currentRank < rankSoFar) {
 						rankSoFar = currentRank;
 						yearSoFar = currentYear;
 					}
@@ -193,9 +200,9 @@ public class BabyBirths {
 	
 	
 	
-	public void testYearOfHightRank() {
+	public void testYearOfHighestRank() {
 		
-		String name = "Noah";
+		String name = "Mich";
 		String gender = "M";
 		
 		int highestYear = yearOfHighestRank(name, gender); 
@@ -241,7 +248,7 @@ public class BabyBirths {
 	
 	public void testGetAverageRank () {
 		
-		String name = "Jacob";
+		String name = "Robert";
 		String gender = "M";
 		
 		double averageRank = getAverageRank(name, gender);  // name Jacob and gender ‘M’ and selecting the three test files above results in returning 2.66.
@@ -253,10 +260,11 @@ public class BabyBirths {
 	
 	public int getTotalBirthsRankedHigher (int year, String name, String gender) {
 		
-		//String fileName = "us_babynames/us_babynames_by_year/" + "yob" + year + ".csv";
-		String fileName = "us_babynames/us_babynames_test/" + "yob" + year + "short.csv";
+		String fileName = "us_babynames/us_babynames_by_year/" + "yob" + year + ".csv";
+		//String fileName = "us_babynames/us_babynames_test/" + "yob" + year + "short.csv";
 		
 		int rank = getRank(year, name, gender);
+		System.out.println("rank: " + rank + " " + name);
 		
 		int totalBirths = 0;
 		int count = 0;
@@ -271,16 +279,22 @@ public class BabyBirths {
 					totalBirths += Integer.parseInt(rec.get(2));
 				}
 			}
-				
+			System.out.println("inside of rank == -1 clause");	
 		}
+		
+		
 		
 		for (CSVRecord rec : fr.getCSVParser(false)) {
 			if (rec.get(1).equals(gender)) {
 				currentRank = getRank(year, rec.get(0), rec.get(1));
+				//System.out.println("Inside for loop " + currentRank);
 				if (currentRank < rank) {
 					totalBirths += Integer.parseInt(rec.get(2));
+				} else {
+					return totalBirths;
 				}
 			}
+			
 		}
 		
 		return totalBirths;
@@ -290,11 +304,11 @@ public class BabyBirths {
 	
 	public void testGetTotalBirthsRankedHigher () {
 		
-		int year = 2012;
-		String name = "Ethan";
+		int year = 1990;
+		String name = "Drew";
 		String gender = "M";
 		
-		int totalBirthsRankedHigher = getTotalBirthsRankedHigher(year, name, gender); // should return 15
+		int totalBirthsRankedHigher = getTotalBirthsRankedHigher(year, name, gender); 
 		
 		System.out.println(totalBirthsRankedHigher);
 		
