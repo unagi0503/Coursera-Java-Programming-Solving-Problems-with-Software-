@@ -62,8 +62,10 @@ public class BabyBirths {
 		
 		int rank = -1;
 		int counter = 0;
+		//String fileName = "us_babynames/us_babynames_by_year/" + "yob" + year + ".csv";
+		String fileName = "us_babynames/us_babynames_test/" + "yob" + year + "short.csv";
 		
-		FileResource fr = new FileResource();
+		FileResource fr = new FileResource(fileName);
 		
 		for (CSVRecord rec : fr.getCSVParser(false)) {
 			if (rec.get(1).equals(gender)) {
@@ -96,8 +98,10 @@ public class BabyBirths {
 	public String getName (int year, int rank, String gender) {
 		
 		int counter = 0;
+		//String fileName = "us_babynames/us_babynames_by_year/" + "yob" + year + ".csv";
+		String fileName = "us_babynames/us_babynames_test/" + "yob" + year + "short.csv";
 		
-		FileResource fr = new FileResource();
+		FileResource fr = new FileResource(fileName);
 		
 		for (CSVRecord rec : fr.getCSVParser(false)) {
 			if (rec.get(1).equals(gender)) {
@@ -121,6 +125,28 @@ public class BabyBirths {
 		String name = getName(year, rank, gender);
 		
 		System.out.println("The Name of the " + rank + "th rank: " + name);
+	}
+	
+	
+	
+	public void whatIsNameInYear (String name, int year, int newYear, String gender) {
+		
+		
+		int rank = getRank(year, name, gender);
+		String nameInNewYear = getName(newYear, rank, gender);
+		String pronoun;
+		if (gender == "F") {
+			pronoun = "she";
+		} else {
+			pronoun = "he";
+		}
+	
+		System.out.println(name + " born in " + year + " would be " + nameInNewYear + " if " + pronoun + " was born in " + newYear);
+		
+	}
+	
+	public void testWhatIsNameInYear () {
+		whatIsNameInYear("Isabella", 2012, 2014, "F");
 	}
 }
 
