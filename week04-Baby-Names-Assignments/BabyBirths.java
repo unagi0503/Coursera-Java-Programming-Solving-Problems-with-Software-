@@ -7,6 +7,7 @@ import edu.duke.*;
 import org.apache.commons.csv.*;
 
 public class BabyBirths {
+	
 	public void printNames () {
 		FileResource fr = new FileResource();
 		for (CSVRecord rec : fr.getCSVParser(false)) {
@@ -62,7 +63,6 @@ public class BabyBirths {
 		int rank = -1;
 		int counter = 0;
 		
-		String dataName = "yob" + year + "short.csv";
 		FileResource fr = new FileResource();
 		
 		for (CSVRecord rec : fr.getCSVParser(false)) {
@@ -82,12 +82,46 @@ public class BabyBirths {
 	
 	
 	public void testGetRank () {
-		int rank = getRank(2012, "Mason", "M");
-		System.out.println(rank);
+		int year = 2012;
+		String name = "Mason";
+		String gender = "M";
+		
+		int rank = getRank(year, name, gender);
+		
+		System.out.println("The Rank of " + name + ": " + rank);
 	}
 	
 	
 	
+	public String getName (int year, int rank, String gender) {
+		
+		int counter = 0;
+		
+		FileResource fr = new FileResource();
+		
+		for (CSVRecord rec : fr.getCSVParser(false)) {
+			if (rec.get(1).equals(gender)) {
+				counter += 1;
+				if (rank == counter) {
+					return rec.get(0);
+				}
+			}
+		}
+		
+		return "NO NAME";
+	}
+	
+	
+	
+	public void testGetName () {
+		int year = 2012;
+		int rank = 4;
+		String gender = "M";
+		
+		String name = getName(year, rank, gender);
+		
+		System.out.println("The Name of the " + rank + "th rank: " + name);
+	}
 }
 
 
