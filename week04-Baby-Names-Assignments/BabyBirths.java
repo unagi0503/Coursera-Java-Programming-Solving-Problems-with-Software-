@@ -194,16 +194,60 @@ public class BabyBirths {
 	public void testYearOfHightRank() {
 		String name = "Noah";
 		String gender = "M";
-		int highestYear = (yearOfHighestRank(name, gender)); 
+		int highestYear = yearOfHighestRank(name, gender); 
 		System.out.println("The Year of the Highest Rank for " + name + " is " + highestYear);
 	}
 	
 	
 	
-	public int getAverageRank (String name, String gender) {
+	public double getAverageRank (String name, String gender) {
+		
+		String filename;
+		
+		double totalRank = 0.0;
+		int currentRank;
+		
+		int totalYear = 0;
+		int currentYear; 
+		
+		DirectoryResource dr = new DirectoryResource();
+		
+		for (File f : dr.selectedFiles()) {
+			
+			filename = f.getName();
+			currentYear = Integer.parseInt(filename.substring(3,7));
+			currentRank = getRank(currentYear, name, gender);
+			
+			if (-1 != currentRank) {
+				totalRank += currentRank;
+				totalYear += 1;
+			}
+		}
 		
 		
+		if (totalYear == 0) {
+			return -1.0;
+		} 
+		
+		return totalRank/totalYear;
 	}
+	
+	
+	
+	public void testGetAverageRank () {
+		String name = "Jacob";
+		String gender = "M";
+		double averageRank = getAverageRank(name, gender);  // name Jacob and gender ‘M’ and selecting the three test files above results in returning 2.66.
+		
+		System.out.println("The Average Rank of " + name + " is " + String.format("%.2f", averageRank));
+	}
+	
+	
+	public int getTotalBirthsRankedHigher (int year, String name, String gender) {
+		
+		return 1;
+	}
+	
 }
 
 
