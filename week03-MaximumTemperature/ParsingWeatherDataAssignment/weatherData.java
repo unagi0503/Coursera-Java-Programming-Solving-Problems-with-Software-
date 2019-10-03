@@ -222,6 +222,25 @@ public class weatherData {
 		//  source: (SoF) Getting file path in java - markovuksanovic, 2010 @ stack overflow
 		//  the crucial part is to use [getAbsoultePath] function.
 		
+		/* How to get File name
+		
+		date: 2019-10-03, 13:32 
+		source: week 1 assignment 2 : the assignment doesn't contains any function like getName
+		url: https://www.coursera.org/learn/java-programming/discussions/all/threads/5JuerAJvEemOQg5-gTDdag
+		
+		The method getName() belongs to Java objects of the File type which is not the same thing as FileResource. It’s an advanced topic to create File objects but the Course Resources provide a way to obtain them inside a 'for each' loop. The first thing to create a DirectoryResource object.
+
+		DirectoryResource dr = new DirectoryResource();
+
+		We use the selectedFiles() method that belongs to DirectoryResource objects from the edu.duke library tools to generate a list of File objects that we can iterate over. The 'for each' loop accesses a File object in a natural way automatically for each loop iteration.
+
+		for (File f : dr.selectedFiles()) {
+
+		String filename = f.getName();
+		
+		
+		*/
+		
 	    String filename = file.getAbsolutePath();
 		filename = filename.substring(filename.length() - 22, filename.length());
 	    return filename;

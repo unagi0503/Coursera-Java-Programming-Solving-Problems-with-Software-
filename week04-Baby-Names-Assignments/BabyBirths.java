@@ -5,6 +5,7 @@
  */
 import edu.duke.*;
 import org.apache.commons.csv.*;
+import java.io.*;
 
 public class BabyBirths {
 	
@@ -147,6 +148,61 @@ public class BabyBirths {
 	
 	public void testWhatIsNameInYear () {
 		whatIsNameInYear("Isabella", 2012, 2014, "F");
+	}
+	
+	
+	
+	public int yearOfHighestRank (String name, String gender) {
+		
+		// getRank(year, name, gender);
+		
+		String filename;
+		
+		int rankSoFar = -1;
+		int currentRank;
+		
+		int yearSoFar = -1;
+		int currentYear;
+				
+		DirectoryResource dr = new DirectoryResource();
+		
+		for (File f : dr.selectedFiles()) {
+			
+			filename = f.getName();
+			currentYear = Integer.parseInt(filename.substring(3,7));
+			currentRank = getRank(currentYear, name, gender);
+			
+			if (-1 != currentRank) {
+				
+				if (-1 == rankSoFar) {
+					rankSoFar = currentRank;
+					yearSoFar = currentYear;
+				} else {
+					if (currentRank <= rankSoFar) {
+						rankSoFar = currentRank;
+						yearSoFar = currentYear;
+					}
+				}
+			}					
+		}
+		
+		return yearSoFar;
+	}
+	
+	
+	
+	public void testYearOfHightRank() {
+		String name = "Noah";
+		String gender = "M";
+		int highestYear = (yearOfHighestRank(name, gender)); 
+		System.out.println("The Year of the Highest Rank for " + name + " is " + highestYear);
+	}
+	
+	
+	
+	public int getAverageRank (String name, String gender) {
+		
+		
 	}
 }
 
