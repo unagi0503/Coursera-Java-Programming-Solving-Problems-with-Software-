@@ -68,8 +68,6 @@ public class BatchGrayScale {
 						
 			gray.setFileName(grayName);
 			
-			//System.out.println(grayName);
-			//System.out.println(gray.getFileName());
 			gray.draw();
 			gray.save();
 			
